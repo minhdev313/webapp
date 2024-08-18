@@ -8,7 +8,7 @@ import {
 import menusList from "@/services/data/menus";
 import { LetterI, ChevronUp, ChevronDown } from "tabler-icons-react";
 import { useLocation, useNavigate } from "react-router";
-import { SiPlatzi } from "react-icons/si";
+import { SiGitbook } from "react-icons/si";
 import { MenuItemType } from "@/types";
 
 const SheetSideBar: React.FC = () => {
@@ -56,11 +56,11 @@ const SheetSideBar: React.FC = () => {
         <div className="w-full h-screen overflow-y-auto rounded-none shadow-none border-e dark:border-foreground ">
           <div className="border-b dark:border-foreground dark:text-light py-5 w-full top-0 sticky shadow-sm ">
             <div className="px-4 flex items-center gap-2 lg:text-lg">
-              <SiPlatzi className=" lg:text-xl " />
-              Platzi + Shadcn Panel
+              <SiGitbook className=" lg:text-xl " />
+              FCPMS
             </div>
             <div className=" text-sm px-[44px] ">
-              By Aung Paing Soe
+              By FPTU
             </div>
           </div>
 

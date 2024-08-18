@@ -3,7 +3,7 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 
 export interface InitialStateType {
   isSideBarOpen: boolean;
-  breadCrumbs: Object[];
+  breadCrumbs: { title: string, link: string }[];
 }
 
 const { saveData, getData } = useLocalStorage();

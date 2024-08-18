@@ -7,7 +7,7 @@ import TopProducts from "./components/top-product";
 
 const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
-  dispatch(setBreadCrumb([{ title: "Dashboard", link: "/" }]));
+  dispatch(setBreadCrumb([{ title: "Home", link: "/" }]));
 
   return (
     <>

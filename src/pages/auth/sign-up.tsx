@@ -4,10 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { useTheme } from "@/services/providers/theme-provider";
-import { signInSchema } from "@/services/schemas";
+import { signUpSchema } from "@/services/schemas";
 import { useSignInMutation } from "@/store/api/v1/endpoints/auth";
 import { saveUserInfo } from "@/store/slice/auth";
-import { SignInType } from "@/types";
+import { SignUpType } from "@/types";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { ErrorMessage, Form, Formik } from "formik";
 import React, { useEffect } from "react";
@@ -16,19 +16,20 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "./components/logo";
 import MobileLogo from "./components/mobile-logo";
 
-const SignIn: React.FC = () => {
+const SignUp: React.FC = () => {
   const { theme } = useTheme();
   const [signIn, data] = useSignInMutation();
   const navigate = useNavigate();
   const { toast } = useToast();
   const dispatch = useDispatch();
 
-  const initialValues: SignInType = {
+  const initialValues: SignUpType = {
     email: "john@mail.com",
     password: "changeme",
+    confirmPassword: "changeme",
   };
 
-  const handleSubmit = async (values: SignInType, action: any) => {
+  const handleSubmit = async (values: SignUpType, action: any) => {
     await signIn(values);
     data.isSuccess && action.resetForm();
   };
@@ -62,10 +63,10 @@ const SignIn: React.FC = () => {
       <div className=" lg:basis-1/2 dark:bg-white dark:text-dark flex flex-col justify-center lg:flex-row items-center h-screen ">
         <div className=" lg:w-7/12 w-screen px-4 lg:mt-0 lg:px-0 mx-auto ">
           <MobileLogo />
-          <div className=" text-2xl mb-6 ">Sign In</div>
+          <div className=" text-2xl mb-6 ">Sign Up</div>
           <Formik
             initialValues={initialValues}
-            validationSchema={signInSchema}
+            validationSchema={signUpSchema}
             onSubmit={handleSubmit}
           >
             {({ values, handleBlur, handleChange, isSubmitting }) => (
@@ -88,7 +89,7 @@ const SignIn: React.FC = () => {
                   />
                 </div>
 
-                <div className="flex flex-col gap-2 ">
+                <div className=" flex flex-col gap-2 ">
                   <Label htmlFor="password">Password</Label>
                   <InputPassword
                     name="password"
@@ -105,10 +106,21 @@ const SignIn: React.FC = () => {
                   />
                 </div>
 
-                <div className="flex justify-end">
-                  <Link to="/auth/forgot-password" className="text-sm">
-                    Forgot Password?
-                  </Link>
+                <div className="flex flex-col gap-2 ">
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                  <InputPassword
+                    name="confirmPassword"
+                    id="confirmPassword"
+                    value={values.confirmPassword}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="****"
+                  />
+                  <ErrorMessage
+                    name="confirmPassword"
+                    component={"div"}
+                    className=" text-sm text-danger"
+                  />
                 </div>
 
                 <Button
@@ -120,16 +132,15 @@ const SignIn: React.FC = () => {
                   {isSubmitting && (
                     <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  Sign In
+                  Sign Up
                 </Button>
               </Form>
             )}
           </Formik>
-
           <div className="mt-6 text-center text-sm ">
-            Don't have an account?{" "}
-            <Link to="/auth/sign-up" className="font-semibold">
-              Sign Up
+            Already have an account?{" "}
+            <Link to="/auth/sign-in" className="font-semibold">
+              Sign In
             </Link>
           </div>
         </div>
@@ -138,4 +149,4 @@ const SignIn: React.FC = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

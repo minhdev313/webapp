@@ -7,7 +7,7 @@ import { setBreadCrumb } from "@/store/slice/app";
 
 const Categories = () => {
   const dispatch = useDispatch();
-  dispatch(setBreadCrumb([{ title: "Dashboard", link: "/" },{ title: "Categories", link: "/categories" }]));
+  dispatch(setBreadCrumb([{ title: "Home", link: "/" },{ title: "Categories", link: "/categories" }]));
   const { data, isLoading } = useGetCategoriesQuery({});
 
   if (isLoading) {

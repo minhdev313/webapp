@@ -8,7 +8,7 @@ import { setBreadCrumb } from "@/store/slice/app";
 
 const Products = () => {
   const dispatch = useDispatch();
-  dispatch(setBreadCrumb([{ title: "Dashboard", link: "/" },{ title: "Products", link: "/products" }]));
+  dispatch(setBreadCrumb([{ title: "Home", link: "/" },{ title: "Products", link: "/products" }]));
   const { data, isLoading } = useGetProductsQuery({});
 
   if (isLoading) {

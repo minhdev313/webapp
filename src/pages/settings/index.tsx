@@ -11,7 +11,7 @@ const Settings: React.FC = () => {
   dispatch(
     setBreadCrumb([
       {
-        title: "Dashboard",
+        title: "Home",
         link: "/dashboard",
       },
       {

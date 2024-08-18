@@ -41,46 +41,6 @@ const menus: MenuItem[] = [
     isOpen: false,
   },
   {
-    icon: <InfoCircle size={20} strokeWidth={2} />,
-    title: "Error Pages",
-    children: [
-      {
-        title: "404 Not Found",
-        link: "/404",
-        icon: <Error404 size={18} strokeWidth={2} />,
-      },
-      {
-        title: "General Error",
-        link: "/error",
-        icon: <ServerOff size={18} strokeWidth={2} />,
-      },
-      {
-        title: "Lose Connection",
-        link: "/network-error",
-        icon: <WifiOff size={18} strokeWidth={2} />,
-      },
-    ],
-    isOpen: false,
-  },
-  // {
-  //   icon: <Shield size={18} strokeWidth={2} />,
-  //   title: "Auth Pages",
-  //   link: "/users",
-  //   children: [
-  //     {
-  //       title: "Sign In",
-  //       link: "/auth/sign-in",
-  //       icon: <Login size={18} strokeWidth={2} />,
-  //     },
-  //     {
-  //       title: "Sign Up",
-  //       link: "/auth/sign-up",
-  //       icon: <UserPlus size={18} strokeWidth={2} />,
-  //     },
-  //   ],
-  //   isOpen: false,
-  // },
-  {
     icon: <Users size={18} strokeWidth={2} />,
     title: "Users",
     link: "/users",
