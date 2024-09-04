@@ -50,7 +50,7 @@ const TopHeader: React.FC = () => {
         <BreadCrumb />
       </div>
       <div className=" flex justify-end items-center gap-3 ">
-        <ToggleMode />
+        {/* <ToggleMode /> */}
         <DropdownMenu>
           <DropdownMenuTrigger className=" focus-visible:outline-none ">
             <Avatar>

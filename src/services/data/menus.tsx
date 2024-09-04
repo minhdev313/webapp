@@ -1,16 +1,10 @@
+import { FaBookOpen } from "react-icons/fa";
 import {
-  InfoCircle,
-  Error404,
-  ServerOff,
-  Home,
-  Users,
-  WifiOff,
-  // Login,
-  // UserPlus,
-  // Shield,
-  Settings2,
   Category2,
-  Package
+  Home,
+  Package,
+  Settings2,
+  Users
 } from "tabler-icons-react";
 
 interface MenuItem {
@@ -50,6 +44,12 @@ const menus: MenuItem[] = [
     icon: <Settings2 size={18} strokeWidth={2} />,
     title: "Settings",
     link: "/settings",
+    isOpen: false,
+  },
+  {
+    icon: <FaBookOpen size={18} strokeWidth={2} />,
+    title: "Major",
+    link: "/majors",
     isOpen: false,
   },
 ];

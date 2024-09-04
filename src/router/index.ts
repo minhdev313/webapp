@@ -6,6 +6,7 @@ import SettingRoutes from "@/router/settings";
 import CategoryRoutes from "@/router/categories";
 import ProductRoutes from "./products";
 import UserRoutes from "./users";
+import MajorRoutes from "./majors";
 
 const router = createBrowserRouter([
   ...AuthRoutes,
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
   ...ProductRoutes,
   ...UserRoutes,
   ...SettingRoutes,
+  ...MajorRoutes
 ]);
 
 export default router;
