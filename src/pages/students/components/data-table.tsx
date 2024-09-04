@@ -1,15 +1,23 @@
+import { Button } from "@/components/ui/button";
 import {
-  ColumnDef,
-  flexRender,
-  ColumnFiltersState,
-  useReactTable,
-  SortingState,
-  VisibilityState,
-  getSortedRowModel,
-  getPaginationRowModel,
-  getCoreRowModel,
-  getFilteredRowModel,
-} from "@tanstack/react-table";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -18,15 +26,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 import React from "react";
+import { FaWpforms } from "react-icons/fa";
+import { GoPlus } from "react-icons/go";
+import { LuFileSpreadsheet } from "react-icons/lu";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -62,50 +78,79 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   });
+  const SEMESTERS = [
+    { value: "1", label: "Fall 2024" },
+    { value: "2", label: "Summer 2024" },
+    { value: "3", label: "Spring 2024" },
+    { value: "4", label: "Fall 2023" },
+    { value: "5", label: "Summer 2023" },
+    { value: "6", label: "Spring 2023" },
+  ];
+
+  function openModalCreateStudent(value: string): void {
+    console.log(value);
+  }
 
   return (
     <>
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter name..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+      <div className="flex justify-between items-center py-4">
+        <div>
+          <Label>Semester</Label>
+          <Select>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder={SEMESTERS[0].label} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {SEMESTERS.map((semester) => (
+                  <SelectItem key={semester.value} value={semester.value}>
+                    {semester.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex">
+          <Input
+            placeholder="Filter name..."
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("name")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="ml-1">
+                <GoPlus className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>Create Students</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuRadioGroup onValueChange={openModalCreateStudent}>
+                <DropdownMenuRadioItem value="form">
+                  <FaWpforms className="mr-1" />
+                  Form
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="sheet">
+                  <LuFileSpreadsheet className="mr-1" />
+                  Sheets
+                </DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
       <div>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className=" dark:border-foreground ">
+              <TableRow
+                key={headerGroup.id}
+                className=" dark:border-foreground "
+              >
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id}>

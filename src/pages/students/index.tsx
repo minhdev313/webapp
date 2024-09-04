@@ -5,9 +5,9 @@ import { useGetUsersQuery } from "@/store/api/v1/endpoints/user";
 import { useDispatch } from "react-redux";
 import { setBreadCrumb } from "@/store/slice/app";
 
-const Users = () => {
+const Students = () => {
   const dispatch = useDispatch();
-  dispatch(setBreadCrumb([{ title: "Home", link: "/" },{ title: "Users", link: "/users" }]));
+  dispatch(setBreadCrumb([{ title: "Home", link: "/" },{ title: "Students", link: "/students" }]));
   const { data, isLoading } = useGetUsersQuery({});
   if (isLoading) {
     return (
@@ -22,4 +22,4 @@ const Users = () => {
   }
 };
 
-export default Users;
+export default Students;

@@ -1,7 +1,6 @@
-import { CategoryType } from "@/types";
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,8 +9,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CategoryType } from "@/types";
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 export const columns: ColumnDef<CategoryType>[] = [
   {
@@ -42,35 +42,32 @@ export const columns: ColumnDef<CategoryType>[] = [
           className=" flex items-center "
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          ID
+          Student ID
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </div>
       );
     },
   },
   {
-    accessorKey: "avatar",
-    header: "Avatar",
+    accessorKey: "name",
+    header: "Name",
     cell: ({ row }) => {
       return (
-        <Avatar>
-          <AvatarImage src={ row.getValue("avatar") } alt="@shadcn" />
-          <AvatarFallback>{ (row.getValue("name") as any).slice(0,2) }</AvatarFallback>
-        </Avatar>
+        <div className="flex items-center">
+          <Avatar className="mr-1">
+            <AvatarImage src={row.getValue("avatar")} alt="@shadcn" />
+            <AvatarFallback>
+              {(row.getValue("name") as string).slice(0, 2)}
+            </AvatarFallback>
+          </Avatar>
+          <div>{row.getValue("name")}</div>
+        </div>
       );
     },
   },
   {
-    accessorKey: "name",
-    header: "Name",
-  },
-  {
     accessorKey: "email",
     header: "Email",
-  },
-  {
-    accessorKey: "role",
-    header: "Role",
   },
   {
     accessorKey: "actions",

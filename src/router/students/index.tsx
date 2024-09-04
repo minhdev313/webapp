@@ -1,20 +1,20 @@
 import { ErrorBoundary } from "@/components";
 import { MainLayout } from "@/layouts";
-import { Users } from "@/pages";
+import { Students } from "@/pages";
 import { RouteObject } from "react-router-dom";
 
-const UserRoutes: RouteObject[] = [
+const StudentRoutes: RouteObject[] = [
   {
-    path: "/users",
+    path: "/students",
     element: <MainLayout />,
     errorElement: <ErrorBoundary />,
     children: [
       {
         path: "",
-        element: <Users />,
+        element: <Students />,
       },
     ],
   },
 ];
 
-export default UserRoutes;
+export default StudentRoutes;
