@@ -3,6 +3,6 @@ export interface SignInType {
   password: string;
 }
 
-export interface SignUpType extends SignInType {
-  confirmPassword: string;
+export interface ForgotPasswordType {
+  email: string;
 }

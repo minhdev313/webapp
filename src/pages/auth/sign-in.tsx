@@ -11,6 +11,7 @@ import { SignInType } from "@/types";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { ErrorMessage, Form, Formik } from "formik";
 import React, { useEffect } from "react";
+import { FaGoogle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "./components/logo";
@@ -125,13 +126,12 @@ const SignIn: React.FC = () => {
               </Form>
             )}
           </Formik>
-
-          <div className="mt-6 text-center text-sm ">
-            Don't have an account?{" "}
-            <Link to="/auth/sign-up" className="font-semibold">
-              Sign Up
-            </Link>
-          </div>
+          {/* <div className="flex justify-center items-center gap-2 mt-4">
+            <Button variant="outline" className="w-full disabled">
+              <FaGoogle className="mr-1" />
+              Sign In with Google
+            </Button>
+          </div> */}
         </div>
       </div>
     </div>
