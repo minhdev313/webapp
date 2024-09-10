@@ -11,7 +11,6 @@ import { SignInType } from "@/types";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { ErrorMessage, Form, Formik } from "formik";
 import React, { useEffect } from "react";
-import { FaGoogle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "./components/logo";
@@ -19,33 +18,34 @@ import MobileLogo from "./components/mobile-logo";
 
 const SignIn: React.FC = () => {
   const { theme } = useTheme();
-  const [signIn, data] = useSignInMutation();
+  const [signIn, signInData] = useSignInMutation();
   const navigate = useNavigate();
   const { toast } = useToast();
   const dispatch = useDispatch();
 
+  // TODO: Remove this values
   const initialValues: SignInType = {
-    email: "john@mail.com",
-    password: "changeme",
+    email: "adminfpt@gmai.com",
+    password: "Test@123",
   };
 
   const handleSubmit = async (values: SignInType, action: any) => {
     await signIn(values);
-    data.isSuccess && action.resetForm();
+    signInData.isSuccess && action.resetForm();
   };
 
   useEffect(() => {
-    const isSuccess = data?.isSuccess;
+    const isSuccess = signInData?.isSuccess;
     if (isSuccess) {
       dispatch(
         saveUserInfo({
-          token: data?.data?.access_token,
+          token: signInData?.data?.data?.access_token,
         })
       );
       navigate("/");
     }
     // Toast
-    if (data?.data || data?.error) {
+    if (signInData?.data || signInData?.error) {
       toast({
         duration: 1000,
         variant: `${isSuccess ? "default" : "destructive"}`,
@@ -55,7 +55,7 @@ const SignIn: React.FC = () => {
         }`,
       });
     }
-  }, [data]);
+  }, [signInData]);
 
   return (
     <div className=" w-screen h-screen flex flex-col lg:flex-row gap-5 lg:gap-0 justify-center items-center">
@@ -126,7 +126,7 @@ const SignIn: React.FC = () => {
               </Form>
             )}
           </Formik>
-          {/* <div className="flex justify-center items-center gap-2 mt-4">
+          {/*  <div className="flex justify-center items-center gap-2 mt-4">
             <Button variant="outline" className="w-full disabled">
               <FaGoogle className="mr-1" />
               Sign In with Google
