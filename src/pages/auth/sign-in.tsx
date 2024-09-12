@@ -9,7 +9,7 @@ import { useSignInMutation } from "@/store/api/v1/endpoints/auth";
 import { saveUserInfo } from "@/store/slice/auth";
 import { SignInType } from "@/types";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import { ErrorMessage, Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik, FormikHelpers } from "formik";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -29,7 +29,10 @@ const SignIn: React.FC = () => {
     password: "Test@123",
   };
 
-  const handleSubmit = async (values: SignInType, action: any) => {
+  const handleSubmit = async (
+    values: SignInType,
+    action: FormikHelpers<SignInType>
+  ) => {
     await signIn(values);
     signInData.isSuccess && action.resetForm();
   };
