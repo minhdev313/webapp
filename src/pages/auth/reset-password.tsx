@@ -9,9 +9,10 @@ import { ResetPasswordType } from "@/types";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { ErrorMessage, Form, Formik, FormikHelpers } from "formik";
 import React, { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "./components/logo";
 import MobileLogo from "./components/mobile-logo";
+import { jwtDecode } from "jwt-decode";
 
 const ResetPassword: React.FC = () => {
   const { theme } = useTheme();
@@ -58,10 +59,26 @@ const ResetPassword: React.FC = () => {
     }
   }, [resetPasswordData]);
 
+  useEffect(() => {
+    if (token) {
+      const decodedToken = jwtDecode<{ exp: number }>(token);
+      const isTokenExpired = decodedToken.exp * 1000 < Date.now();
+      toast({
+        duration: 1000,
+        variant: "destructive",
+        title: "Reset Password",
+        description:
+          "The reset password link has expired. Please request a new one.",
+      });
+      if (isTokenExpired) {
+        navigate("/auth/forgot-password");
+      }
+    }
+  }, [token, navigate]);
+
   if (!token) {
     return <PageNotFoundError />;
   }
-
 
   return (
     <div className=" w-screen h-screen flex flex-col lg:flex-row gap-5 lg:gap-0 justify-center items-center">
@@ -104,6 +121,11 @@ const ResetPassword: React.FC = () => {
                   )}
                   Reset Password
                 </Button>
+                <Link to="/auth/sign-in" className="text-sm">
+                  <Button variant="secondary" className=" w-full ">
+                    Back to Sign In
+                  </Button>
+                </Link>
               </Form>
             )}
           </Formik>

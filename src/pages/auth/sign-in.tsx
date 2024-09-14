@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "./components/logo";
 import MobileLogo from "./components/mobile-logo";
+import { FaGoogle } from "react-icons/fa";
 
 const SignIn: React.FC = () => {
   const { theme } = useTheme();
@@ -129,12 +130,12 @@ const SignIn: React.FC = () => {
               </Form>
             )}
           </Formik>
-          {/*  <div className="flex justify-center items-center gap-2 mt-4">
+          <div className="flex justify-center items-center gap-2 mt-4">
             <Button variant="outline" className="w-full disabled">
               <FaGoogle className="mr-1" />
               Sign In with Google
             </Button>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
