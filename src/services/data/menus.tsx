@@ -36,9 +36,19 @@ const menus: MenuItem[] = [
   // },
   {
     icon: <Users size={18} strokeWidth={2} />,
-    title: "Students",
-    link: "/students",
-    isOpen: false,
+    title: "Accounts",
+    children: [
+      {
+        title: "Students",
+        link: "/accounts/students",
+        icon: <Users size={18} strokeWidth={2} />,
+      },
+      {
+        title: "Lecturers",
+        link: "/accounts/lecturers",
+        icon: <Users size={18} strokeWidth={2} />,
+      },
+    ]
   },
   {
     icon: <FaBookOpen size={18} strokeWidth={2} />,

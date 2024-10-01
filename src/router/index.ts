@@ -5,7 +5,7 @@ import DashboardRoutes from "@/router/dashboard";
 import SettingRoutes from "@/router/settings";
 import CategoryRoutes from "@/router/categories";
 import ProductRoutes from "./products";
-import StudentRoutes from "./students";
+import AccountsRoutes from "./accounts";
 import MajorRoutes from "./majors";
 
 const router = createBrowserRouter([
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
   ...DashboardRoutes,
   ...CategoryRoutes,
   ...ProductRoutes,
-  ...StudentRoutes,
+  ...AccountsRoutes,
   ...SettingRoutes,
   ...MajorRoutes
 ]);
