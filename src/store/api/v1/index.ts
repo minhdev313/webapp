@@ -7,12 +7,13 @@ export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_APP_API_URL + '/' + API_VERSION,
-    prepareHeaders: (headers) => {
-
+    prepareHeaders: (headers, { getState }) => {
+      const authState = getState().auth;
+      const authToken = token(authState);
       headers.set("Content-Type", "application/json");
 
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
+      if (authToken) {
+        headers.set("authorization", `Bearer ${authToken}`);
       }
 
       return headers;
