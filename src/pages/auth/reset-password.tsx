@@ -2,17 +2,17 @@ import { InputPassword, PageNotFoundError } from "@/components";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
+import { isTokenExpired } from "@/lib/utils";
 import { useTheme } from "@/services/providers/theme-provider";
 import { resetPasswordSchema } from "@/services/schemas";
 import { useResetPasswordMutation } from "@/store/api/v1/endpoints/auth";
 import { ResetPasswordType } from "@/types";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import { ErrorMessage, Form, Formik, FormikHelpers } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
 import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "./components/logo";
 import MobileLogo from "./components/mobile-logo";
-import { jwtDecode } from "jwt-decode";
 
 const ResetPassword: React.FC = () => {
   const { theme } = useTheme();
@@ -27,10 +27,7 @@ const ResetPassword: React.FC = () => {
     token: token || "",
   };
 
-  const handleSubmit = async (
-    values: ResetPasswordType,
-    action: FormikHelpers<ResetPasswordType>
-  ) => {
+  const handleSubmit = async (values: ResetPasswordType) => {
     await resetPassword(values);
   };
 
@@ -61,8 +58,7 @@ const ResetPassword: React.FC = () => {
 
   useEffect(() => {
     if (token) {
-      const decodedToken = jwtDecode<{ exp: number }>(token);
-      const isTokenExpired = decodedToken.exp * 1000 < Date.now();
+      const isExpired = isTokenExpired(token);
       toast({
         duration: 1000,
         variant: "destructive",
@@ -70,7 +66,7 @@ const ResetPassword: React.FC = () => {
         description:
           "The reset password link has expired. Please request a new one.",
       });
-      if (isTokenExpired) {
+      if (isExpired) {
         navigate("/auth/forgot-password");
       }
     }

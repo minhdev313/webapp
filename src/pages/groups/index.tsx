@@ -1,20 +1,19 @@
 import { setBreadCrumb } from "@/store/slice/app";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-const Majors = () => {
+const Groups: React.FC = () => {
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(
       setBreadCrumb([
         { title: "Home", link: "/" },
-        { title: "Majors", link: "/majors" },
+        { title: "Groups", link: "/groups" },
       ])
     );
   }, [dispatch]);
 
-  return <div>Majors</div>;
+  return <div>Groups</div>;
 };
 
-export default Majors;
+export default Groups;

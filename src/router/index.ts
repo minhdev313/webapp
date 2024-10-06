@@ -7,6 +7,7 @@ import CategoryRoutes from "@/router/categories";
 import ProductRoutes from "./products";
 import AccountsRoutes from "./accounts";
 import MajorRoutes from "./majors";
+import GroupsRoutes from "./groups";
 
 const router = createBrowserRouter([
   ...AuthRoutes,
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
   ...DashboardRoutes,
   ...CategoryRoutes,
   ...ProductRoutes,
+  ...GroupsRoutes,
   ...AccountsRoutes,
   ...SettingRoutes,
   ...MajorRoutes

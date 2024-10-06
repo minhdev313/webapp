@@ -1,10 +1,13 @@
+import { AuthGuard, SideBar, TopHeader } from "@/components";
+import { RootState } from "@/store";
 import React from "react";
-import { Outlet } from "react-router-dom";
-import { AuthGuard, TopHeader, SideBar } from "@/components";
 import { useSelector } from "react-redux";
+import { Outlet } from "react-router-dom";
 
 const MainLayout: React.FC = () => {
-  const isSideBarOpen = useSelector((state: any) => state.app.isSideBarOpen);
+  const isSideBarOpen = useSelector(
+    (state: RootState) => state.app.isSideBarOpen
+  );
   return (
     <AuthGuard>
       <div className="flex">

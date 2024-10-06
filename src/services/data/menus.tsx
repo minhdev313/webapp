@@ -1,13 +1,7 @@
-import { FaBookOpen } from "react-icons/fa";
-import {
-  Category2,
-  Home,
-  Package,
-  Settings2,
-  Users
-} from "tabler-icons-react";
+import { IoMdBook } from "react-icons/io";
+import { Home, Settings2, Users } from "tabler-icons-react";
 
-interface MenuItem {
+export interface MenuItem {
   title: string;
   link?: string;
   icon?: JSX.Element;
@@ -22,18 +16,11 @@ const menus: MenuItem[] = [
     link: "/dashboard",
     isOpen: false,
   },
-  // {
-  //   icon: <Category2 size={18} strokeWidth={2} />,
-  //   title: "Categories",
-  //   link: "/categories",
-  //   isOpen: false,
-  // },
-  // {
-  //   icon: <Package size={18} strokeWidth={2} />,
-  //   title: "Products",
-  //   link: "/products",
-  //   isOpen: false,
-  // },
+  {
+    icon: <Users size={18} strokeWidth={2} />,
+    title: "Group",
+    link: "/groups",
+  },
   {
     icon: <Users size={18} strokeWidth={2} />,
     title: "Accounts",
@@ -48,10 +35,10 @@ const menus: MenuItem[] = [
         link: "/accounts/lecturers",
         icon: <Users size={18} strokeWidth={2} />,
       },
-    ]
+    ],
   },
   {
-    icon: <FaBookOpen size={18} strokeWidth={2} />,
+    icon: <IoMdBook size={18} strokeWidth={2} />,
     title: "Major",
     link: "/majors",
     isOpen: false,

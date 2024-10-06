@@ -2,11 +2,8 @@ import { api } from "..";
 
 const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getUsers: builder.query({
-      query: () => ({
-        url: "/users",
-        method: "GET",
-      }),
+    getMe: builder.query({
+      query: () => "/users/me",
       providesTags: ["User"],
     }),
     getUser: builder.query({
@@ -19,4 +16,4 @@ const userApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetUsersQuery, useGetUserQuery } = userApi;
+export const { useGetMeQuery, useGetUserQuery } = userApi;

@@ -7,8 +7,16 @@ export interface StudentType {
 }
 
 export interface LectureType {
-  email: string;
   name: string;
+  email: string;
   phone_number: string;
   sub_major_id: number;
+}
+
+export interface UserType {
+  id: string;
+  name: string;
+  email: string;
+  phone_number: string;
+  user_type: string;
 }

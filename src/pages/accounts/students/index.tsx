@@ -1,4 +1,3 @@
-import SemesterFilter from "@/components/shared/SemesterFilter";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -52,7 +51,6 @@ const Students = () => {
   return (
     <div>
       <div className="flex justify-between">
-        <SemesterFilter />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-1">

@@ -1,5 +1,5 @@
 import { api } from "..";
-import { ForgotPasswordType, ResetPasswordType, SignInType } from "@/types";
+import { ChangePasswordType, ForgotPasswordType, ResetPasswordType, SignInType } from "@/types";
 
 const authEndPoint = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -24,11 +24,19 @@ const authEndPoint = api.injectEndpoints({
         body
       }),
     }),
+    changePassword: builder.mutation({
+      query: (body: ChangePasswordType) => ({
+        url: "/change-password",
+        method: "POST",
+        body
+      }),
+    }),
   }),
 });
 
 export const {
   useSignInMutation,
   useForgotPasswordMutation,
-  useResetPasswordMutation
+  useResetPasswordMutation,
+  useChangePasswordMutation,
 } = authEndPoint;

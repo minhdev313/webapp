@@ -1,8 +1,7 @@
+import SemesterFilter from "@/components/shared/SemesterFilter";
 import { setBreadCrumb } from "@/store/slice/app";
 import React from "react";
 import { useDispatch } from "react-redux";
-import Overview from "./components/overview";
-import TotalIncome from "./components/totalIncome";
 
 const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
@@ -10,11 +9,8 @@ const Dashboard: React.FC = () => {
 
   return (
     <>
-      <Overview />
-      <div className=" flex flex-col lg:flex-row mt-6 gap-3 ">
-        <div className=" basis-6/12 ">
-          <TotalIncome />
-        </div>
+      <div>
+        <SemesterFilter />
       </div>
     </>
   );
