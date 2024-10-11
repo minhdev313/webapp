@@ -1,28 +1,34 @@
-import { ColumnDef } from "@tanstack/react-table";
-import Menu from "./Menu";
+import { DataTableColumnHeader, TextCell } from "@/components/data-table";
 import { TopicType } from "@/types/topic";
+import { ColumnDef } from "@tanstack/react-table";
+import Actions from "./actions";
 
 export const columns: ColumnDef<TopicType>[] = [
   {
     accessorKey: "id",
-    header: "ID",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} columnTitle="ID" />
+    ),
+    cell: ({ row }) => <TextCell size={60}>{row.original.id}</TextCell>,
   },
   {
     accessorKey: "name",
-    header: "Name",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} columnTitle="Name" />
+    ),
+    cell: ({ row }) => <TextCell size={200}>{row.original.name}</TextCell>,
   },
   {
     accessorKey: "teacher",
-    header: "Teacher",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} columnTitle="Teacher" />
+    ),
     cell: ({ row }) => (
       <div>{(row.getValue("teacher") as { name: string }).name}</div>
     ),
   },
   {
-    accessorKey: "actions",
-    header: "Actions",
-    cell: ({ row }) => {
-      return (<Menu row={row} />);
-    },
+    id: "actions",
+    cell: ({ row }) => <Actions row={row} />,
   },
 ];

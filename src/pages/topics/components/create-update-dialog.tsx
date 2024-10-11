@@ -12,36 +12,35 @@ import { Label } from "@/components/ui/label";
 import { TopicType } from "@/types/topic";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { ErrorMessage, Form, Formik } from "formik";
-interface CreateUpdateModalProps {
+interface CreateUpdateDialogProps {
   open: boolean;
-  onCancel: () => void;
+  onOpenChange: (open: boolean) => void;
   topic?: TopicType;
 }
 
-const CreateUpdateModal: React.FC<CreateUpdateModalProps> = ({
-  open,
-  onCancel,
+const CreateUpdateDialog: React.FC<CreateUpdateDialogProps> = ({
   topic,
+  open,
+  onOpenChange,
 }) => {
-  const initialValues = {
+  const initialValues: Partial<TopicType> = {
     name: topic?.name || "",
     path: topic?.path || "",
-    teacher: null,
+    teacher: topic?.teacher,
   };
 
-  const handleForm = async (values) => {
-    if(topic) {
+  const handleForm = async (values: Partial<TopicType>) => {
+    if (topic) {
       // Update topic
       console.log("Update topic", values);
-    }
-    else {
+    } else {
       // Create topic
       console.log("Create topic", values);
     }
   };
 
   return (
-    <Dialog open={open} onOpenChange={onCancel}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] lg:max-w-[800px]">
         <DialogHeader>
           <DialogTitle>{topic ? "Update Topic" : "Create Topic"}</DialogTitle>
@@ -49,10 +48,7 @@ const CreateUpdateModal: React.FC<CreateUpdateModalProps> = ({
             Make changes to your topic here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={handleForm}
-        >
+        <Formik initialValues={initialValues} onSubmit={handleForm}>
           {({ values, handleBlur, handleChange, isSubmitting }) => (
             <Form className=" flex flex-col gap-3 ">
               <div className="flex flex-col gap-2 ">
@@ -63,7 +59,7 @@ const CreateUpdateModal: React.FC<CreateUpdateModalProps> = ({
                   value={values.name}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  placeholder="Enter topic's name"
+                  placeholder="Enter name"
                 />
                 <ErrorMessage
                   name="name"
@@ -79,7 +75,7 @@ const CreateUpdateModal: React.FC<CreateUpdateModalProps> = ({
                   value={values.path}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  placeholder="Enter topic's path"
+                  placeholder="Enter path"
                 />
                 <ErrorMessage
                   name="path"
@@ -88,14 +84,19 @@ const CreateUpdateModal: React.FC<CreateUpdateModalProps> = ({
                 />
               </div>
               <DialogFooter>
-                <Button variant="secondary" onClick={onCancel}>
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    onOpenChange(false);
+                  }}
+                >
                   Cancel
                 </Button>
                 <Button type="submit" disabled={isSubmitting}>
                   {isSubmitting && (
                     <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  Create
+                  {topic ? "Update" : "Create"}
                 </Button>
               </DialogFooter>
             </Form>
@@ -106,4 +107,4 @@ const CreateUpdateModal: React.FC<CreateUpdateModalProps> = ({
   );
 };
 
-export default CreateUpdateModal;
+export default CreateUpdateDialog;
