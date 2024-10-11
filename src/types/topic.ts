@@ -1,6 +1,6 @@
 import { LectureType } from "./accounts";
 
-export interface Topic {
+export interface TopicType {
   id: number;
   name: string;
   path: string;

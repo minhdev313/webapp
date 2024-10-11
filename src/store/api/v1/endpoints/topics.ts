@@ -1,9 +1,9 @@
-import { Topic } from "@/types/topic";
+import { TopicType } from "@/types/topic";
 import { api } from "..";
 export interface GetTopicsResponse {
   code: number;
   data: {
-    items: Topic[];
+    items: TopicType[];
     meta: {
       current_page: number;
       total: number;
@@ -11,6 +11,7 @@ export interface GetTopicsResponse {
   };
   message: boolean;
 }
+
 const topicApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getTopics: builder.query<GetTopicsResponse, { limit?: number; page?: number }>({
@@ -20,7 +21,14 @@ const topicApi = api.injectEndpoints({
       }),
       providesTags: ["Topic"],
     }),
+    deleteTopic: builder.mutation<void, { id: number }>({
+      query: ({ id }) => ({
+        url: `/topic_references/teachers/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ["Topic"],
+    }),
   }),
 });
 
-export const { useGetTopicsQuery } = topicApi;
+export const { useGetTopicsQuery, useDeleteTopicMutation } = topicApi;
