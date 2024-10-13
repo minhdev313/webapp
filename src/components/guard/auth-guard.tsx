@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import { getCookie } from "typescript-cookie";
+import { useToast } from "../ui/use-toast";
 
 const AuthGuardComponent: React.FC<ChildrenType> = ({ children }) => {
   const token = useSelector((state: RootState) => state?.auth?.token);
@@ -18,6 +19,7 @@ const AuthGuardComponent: React.FC<ChildrenType> = ({ children }) => {
   const { isOnline } = useNetworkDetect();
   const { data: userInfoData, isLoading } = useGetMeQuery({}, { skip: !token });
   const [fetched, setFetched] = useState(false);
+  const { toast } = useToast();
 
   // Checking Authentication
   const checkAuth = () => {
@@ -28,6 +30,12 @@ const AuthGuardComponent: React.FC<ChildrenType> = ({ children }) => {
         return;
       }
 
+      if (isExpired) {
+        toast({
+          title: "Session Expired",
+          description: "Please login again to continue",
+        });
+      }
       navigate("/auth/sign-in");
       dispatch(removeUserInfo());
     } else {
