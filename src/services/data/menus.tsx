@@ -1,5 +1,8 @@
+import { FaRegLightbulb } from "react-icons/fa";
 import { IoMdBook } from "react-icons/io";
+import { MdOutlineGroups } from "react-icons/md";
 import { Home, Settings2, Users } from "tabler-icons-react";
+import { HiOutlineUserGroup } from "react-icons/hi";
 
 export interface MenuItem {
   title: string;
@@ -17,7 +20,7 @@ const menus: MenuItem[] = [
     isOpen: false,
   },
   {
-    icon: <Users size={18} strokeWidth={2} />,
+    icon: <HiOutlineUserGroup size={18} strokeWidth={2} />,
     title: "Group",
     link: "/groups",
   },
@@ -36,6 +39,12 @@ const menus: MenuItem[] = [
         icon: <Users size={18} strokeWidth={2} />,
       },
     ],
+  },
+  {
+    icon: <FaRegLightbulb size={18} strokeWidth={2} />,
+    title: "Topics",
+    link: "/topics",
+    isOpen: false,
   },
   {
     icon: <IoMdBook size={18} strokeWidth={2} />,

@@ -21,5 +21,6 @@ export { default as ServerErrorLottie } from "@/components/lottie/server-error";
 export { default as NetworkErrorLottie } from "@/components/lottie/network-error";
 export { default as ErrorLottie } from "@/components/lottie/general-error";
 export { default as LoadingLottie } from "@/components/lottie/loading";
+export { default as LoadingAppLottie } from "@/components/lottie/loading-app";
 // Tools
 export { default as ToggleMode } from "@/components/tools/toggle-mode";

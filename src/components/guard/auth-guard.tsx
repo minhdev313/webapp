@@ -1,5 +1,6 @@
 import { NetworkError } from "@/components";
 import useNetworkDetect from "@/hooks/useNetworkDetect";
+import { isTokenExpired } from "@/lib/utils";
 import { RootState } from "@/store";
 import { useGetMeQuery } from "@/store/api/v1/endpoints/user";
 import { removeUserInfo, saveUserInfo, setUserInfo } from "@/store/slice/auth";
@@ -21,7 +22,8 @@ const AuthGuardComponent: React.FC<ChildrenType> = ({ children }) => {
   // Checking Authentication
   const checkAuth = () => {
     const storeToken = getCookie("token");
-    if (!storeToken) {
+    const isExpired = storeToken && isTokenExpired(storeToken);
+    if (!storeToken || isExpired) {
       if (location.pathname.includes("/auth")) {
         return;
       }
