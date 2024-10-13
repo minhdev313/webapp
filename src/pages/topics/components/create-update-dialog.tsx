@@ -9,6 +9,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast";
+import {
+  useCreateTopicMutation,
+  useUpdateTopicMutation,
+} from "@/store/api/v1/endpoints/topics";
 import { TopicType } from "@/types/topic";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { ErrorMessage, Form, Formik } from "formik";
@@ -23,19 +28,40 @@ const CreateUpdateDialog: React.FC<CreateUpdateDialogProps> = ({
   open,
   onOpenChange,
 }) => {
-  const initialValues: Partial<TopicType> = {
+  const { toast } = useToast();
+  const initialValues = {
     name: topic?.name || "",
     path: topic?.path || "",
-    teacher: topic?.teacher,
   };
 
-  const handleForm = async (values: Partial<TopicType>) => {
-    if (topic) {
-      // Update topic
-      console.log("Update topic", values);
-    } else {
-      // Create topic
-      console.log("Create topic", values);
+  const [createTopic] = useCreateTopicMutation();
+  const [updateTopic] = useUpdateTopicMutation();
+
+  const handleForm = async (values: { name: string; path: string }) => {
+    try {
+      if (topic) {
+        await updateTopic({ id: topic.id, ...values }).unwrap();
+        toast({
+          title: "Update Topic",
+          description: "Topic updated successfully",
+        });
+        onOpenChange(false);
+      } else {
+        await createTopic(values).unwrap();
+        toast({
+          title: "Create Topic",
+          description: "Topic created successfully",
+        });
+        onOpenChange(false);
+      }
+      onOpenChange(false);
+    } catch (error) {
+      toast({
+        title: `${topic ? "Update" : "Create"} Topic`,
+        description:
+          "Something went wrong, please try again. If the problem persists, contact support.",
+        variant: "destructive",
+      });
     }
   };
 

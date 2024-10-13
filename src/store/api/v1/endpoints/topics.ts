@@ -21,6 +21,22 @@ const topicApi = api.injectEndpoints({
       }),
       providesTags: ["Topic"],
     }),
+    createTopic: builder.mutation<void, {name: string, path: string}>({
+      query: (data) => ({
+        url: '/topic_references/teachers',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ["Topic"],
+    }),
+    updateTopic: builder.mutation<void, {id: number, name: string, path: string}>({
+      query: (data) => ({
+        url: `/topic_references/teachers`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ["Topic"],
+    }),
     deleteTopic: builder.mutation<void, { id: number }>({
       query: ({ id }) => ({
         url: `/topic_references/teachers/${id}`,
@@ -31,4 +47,9 @@ const topicApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetTopicsQuery, useDeleteTopicMutation } = topicApi;
+export const {
+  useGetTopicsQuery,
+  useDeleteTopicMutation,
+  useCreateTopicMutation,
+  useUpdateTopicMutation
+} = topicApi;
