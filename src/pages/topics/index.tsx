@@ -21,7 +21,7 @@ const Topics: React.FC = () => {
 
   return (
     <>
-      <div className="flex justify-end">
+      <div className="flex justify-end mb-2">
         <Button
           variant="outline"
           className="ml-1"

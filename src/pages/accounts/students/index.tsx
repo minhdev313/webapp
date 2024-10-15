@@ -14,10 +14,9 @@ import { FaWpforms } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
 import { LuFileSpreadsheet } from "react-icons/lu";
 import { useDispatch } from "react-redux";
-import { columns } from "./components/columns";
-import { DataTable } from "./components/data-table";
-import FormModal from "./components/FormModal";
-import SheetModal from "./components/SheetModal";
+import CreateUpdateDialog from "./components/create-update-dialog";
+import { StudentsTable } from "./components/table";
+import UploadSheetDialog from "./components/upload-sheet-dialog";
 
 const Students = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,20 +36,9 @@ const Students = () => {
     setModalType(value);
     setIsModalOpen(true);
   }
-  // TODO: Implement the useGetStudentsQuery hook
-  // const { data, isLoading } = useGetStudentsQuery({});
-  // if (isLoading) {
-  //   return (
-  //     <div className=" flex justify-center pt-10">
-  //       <div className=" w-[250px] ">
-  //         <LoadingLottie />
-  //       </div>
-  //     </div>
-  //   );
-  // } else {
   return (
-    <div>
-      <div className="flex justify-between">
+    <>
+      <div className="flex justify-end mb-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-1">
@@ -73,15 +61,17 @@ const Students = () => {
           </DropdownMenuContent>
         </DropdownMenu>
         {modalType === "form" ? (
-          <FormModal open={isModalOpen} setOpen={setIsModalOpen} />
+          <CreateUpdateDialog
+            open={isModalOpen}
+            onOpenChange={setIsModalOpen}
+          />
         ) : (
-          <SheetModal open={isModalOpen} setOpen={setIsModalOpen} />
+          <UploadSheetDialog open={isModalOpen} onOpenChange={setIsModalOpen} />
         )}
       </div>
-      <DataTable columns={columns} data={[]} />
-    </div>
+      <StudentsTable />
+    </>
   );
-  // }
 };
 
 export default Students;

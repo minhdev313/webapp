@@ -1,7 +1,27 @@
-import { LectureType, StudentType } from "@/types/accounts";
+import { LectureType, StudentType, UserType, UserTypes } from "@/types/accounts";
 import { api } from "..";
+
+interface UsersResponse {
+  code: number;
+  message: boolean;
+  data: {
+    common_info: UserType;
+    extra_info: {
+      student?: StudentType;
+      lecture?: LectureType;
+    }
+  }[]
+}
+
 const studentEndPoint = api.injectEndpoints({
   endpoints: (builder) => ({
+    getUsers: builder.query<UsersResponse, { limit?: number; page?: number; user_types?: UserTypes }>({
+      query: ({ limit = 10, page = 1, user_types }) => ({
+        url: 'admin/users/',
+        params: { limit, page, user_types },
+      }),
+    }),
+
     //#region Students
     createStudent: builder.mutation({
       query: (body: StudentType) => ({
@@ -52,6 +72,8 @@ const studentEndPoint = api.injectEndpoints({
 });
 
 export const {
+  useGetUsersQuery,
+
   useCreateStudentMutation,
   useImportStudentsMutation,
 

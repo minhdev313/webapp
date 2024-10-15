@@ -18,10 +18,11 @@ import { ErrorMessage, Form, Formik } from "formik";
 import { useEffect } from "react";
 interface FormProps {
   open: boolean;
-  setOpen: (open: boolean) => void;
+  onOpenChange: (open: boolean) => void;
+  student?: StudentType;
 }
 
-const FormModal: React.FC<FormProps> = ({ open, setOpen }) => {
+const CreateUpdateDialog: React.FC<FormProps> = ({ open, onOpenChange, student }) => {
   const [createStudent, createStudentData] = useCreateStudentMutation();
 
   const initialValues: StudentType = {
@@ -44,7 +45,7 @@ const FormModal: React.FC<FormProps> = ({ open, setOpen }) => {
         title: "Create Student",
         description: "Create Student Successfully.",
       });
-      setOpen(false);
+      onOpenChange(false);
     }
 
     if (createStudentData.error) {
@@ -65,7 +66,7 @@ const FormModal: React.FC<FormProps> = ({ open, setOpen }) => {
   }, [createStudentData]);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] lg:max-w-[800px]">
         <DialogHeader>
           <DialogTitle>Create Students</DialogTitle>
@@ -160,4 +161,4 @@ const FormModal: React.FC<FormProps> = ({ open, setOpen }) => {
   );
 };
 
-export default FormModal;
+export default CreateUpdateDialog;

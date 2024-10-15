@@ -1,98 +1,39 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { CategoryType } from "@/types";
+import { DataTableColumnHeader, TextCell } from "@/components/data-table";
+import { StudentType } from "@/types/accounts";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import Actions from "./actions";
 
-export const columns: ColumnDef<CategoryType>[] = [
+export const columns: ColumnDef<StudentType>[] = [
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
+    accessorKey: "studentCode",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} columnTitle="Student Code" />
     ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-  },
-  {
-    accessorKey: "id",
-    header: ({ column }) => {
-      return (
-        <div
-          className=" flex items-center "
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Student ID
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
+    cell: ({ row }) => <TextCell size={60}>{row.original.code}</TextCell>,
   },
   {
     accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => {
-      return (
-        <div className="flex items-center">
-          <Avatar className="mr-1">
-            <AvatarImage src={row.getValue("avatar")} alt="@shadcn" />
-            <AvatarFallback>
-              {(row.getValue("name") as string).slice(0, 2)}
-            </AvatarFallback>
-          </Avatar>
-          <div>{row.getValue("name")}</div>
-        </div>
-      );
-    },
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} columnTitle="Name" />
+    ),
+    cell: ({ row }) => <TextCell size={200}>{row.original.name}</TextCell>,
   },
   {
     accessorKey: "email",
-    header: "Email",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} columnTitle="Email" />
+    ),
+    cell: ({ row }) => <TextCell size={200}>{row.original.email}</TextCell>,
   },
   {
-    accessorKey: "actions",
-    header: "Action",
-    cell: ({ row }) => {
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(row.getValue("id"))}
-            >
-              Copy ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View Detail</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    accessorKey: "major",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} columnTitle="Major" />
+    ),
+    cell: ({ row }) => <TextCell size={200}>{row.original.sub_major_id}</TextCell>, // TODO: Component for major
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => <Actions row={row} />,
   },
 ];

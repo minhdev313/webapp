@@ -20,3 +20,8 @@ export interface UserType {
   phone_number: string;
   user_type: string;
 }
+
+export enum UserTypes {
+  STUDENT = "student",
+  TEACHER = "teacher",
+}

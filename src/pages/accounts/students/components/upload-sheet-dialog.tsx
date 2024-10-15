@@ -10,23 +10,23 @@ import {
 } from "@/components/ui/dialog";
 import { useImportStudentsMutation } from "@/store/api/v1/endpoints/admin";
 import { useState } from "react";
-interface SheetModalProps {
+interface UploadSheetDialogProps {
   open: boolean;
-  setOpen: (open: boolean) => void;
+  onOpenChange: (open: boolean) => void;
 }
 
-const SheetModal: React.FC<SheetModalProps> = ({ open, setOpen }) => {
+const UploadSheetDialog: React.FC<UploadSheetDialogProps> = ({ open, onOpenChange }) => {
   const [importStudents, importStudentsData] = useImportStudentsMutation();
   const [files, setFiles] = useState<File[]>([]);
 
   const createSheetForm = () => {
     console.log("Creating form", { files });
     // importStudents({ file: formData });
-    // setOpen(false);
+    // onOpenChange(false);
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] lg:max-w-[800px]">
         <DialogHeader>
           <DialogTitle>Create Students</DialogTitle>
@@ -57,4 +57,4 @@ const SheetModal: React.FC<SheetModalProps> = ({ open, setOpen }) => {
   );
 };
 
-export default SheetModal;
+export default UploadSheetDialog;
