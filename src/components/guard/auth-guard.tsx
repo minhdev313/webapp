@@ -17,7 +17,7 @@ const AuthGuardComponent: React.FC<ChildrenType> = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isOnline } = useNetworkDetect();
-  const { data: userInfoData, isLoading } = useGetMeQuery({}, { skip: !token });
+  const { data: userInfoData, isLoading, error} = useGetMeQuery({}, { skip: !token });
   const [fetched, setFetched] = useState(false);
   const { toast } = useToast();
 
@@ -25,7 +25,7 @@ const AuthGuardComponent: React.FC<ChildrenType> = ({ children }) => {
   const checkAuth = () => {
     const storeToken = getCookie("token");
     const isExpired = storeToken && isTokenExpired(storeToken);
-    if (!storeToken || isExpired) {
+    if (!storeToken || isExpired || error) {
       if (location.pathname.includes("/auth")) {
         return;
       }

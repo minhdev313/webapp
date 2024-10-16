@@ -1,4 +1,5 @@
 export interface StudentType {
+  id?: number;
   code: string;
   email: string;
   name: string;

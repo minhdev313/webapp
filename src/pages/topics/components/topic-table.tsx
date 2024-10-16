@@ -1,10 +1,10 @@
-import { LoadingLottie } from "@/components";
+import { LoadingTableLottie } from "@/components";
 import { DataTable } from "@/components/data-table";
 import ErrorBoundaryComponent from "@/components/error/error-boundary";
 import { useGetTopicsQuery } from "@/store/api/v1/endpoints/topics";
 import { TopicType } from "@/types/topic";
 import { PaginationState, TableOptions } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { columns } from "./columns";
 
 export function TopicTable() {
@@ -13,8 +13,8 @@ export function TopicTable() {
     pageSize: 10,
   });
 
-  const [tableData, setTableData] = useState<TopicType[]>([]);
-  const [totalRecord, setTotalRecord] = useState(0);
+  // const [tableData, setTableData] = useState<TopicType[]>([]);
+  // const [totalRecord, setTotalRecord] = useState(0);
 
   const {
     data: queryData,
@@ -25,18 +25,19 @@ export function TopicTable() {
     limit: pagination.pageSize,
   });
 
-  useEffect(() => {
-    if (queryData) {
-      setTableData(queryData.data.items);
-      setTotalRecord(queryData.data.meta.total);
-    }
+  const tableData = useMemo(() => {
+    return queryData ? queryData.data.items : [];
+  }, [queryData]);
+
+  const totalRecord = useMemo(() => {
+    return queryData ? queryData.data.meta.total : 0;
   }, [queryData]);
 
   if (isLoading) {
     return (
       <div className=" flex justify-center pt-10">
         <div className=" w-[250px] ">
-          <LoadingLottie />
+          <LoadingTableLottie />
         </div>
       </div>
     );

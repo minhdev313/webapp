@@ -2,10 +2,11 @@ import { DataTableColumnHeader, TextCell } from "@/components/data-table";
 import { StudentType } from "@/types/accounts";
 import { ColumnDef } from "@tanstack/react-table";
 import Actions from "./actions";
+import SubMajor from "@/components/common/major";
 
 export const columns: ColumnDef<StudentType>[] = [
   {
-    accessorKey: "studentCode",
+    accessorKey: "code",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} columnTitle="Student Code" />
     ),
@@ -26,11 +27,11 @@ export const columns: ColumnDef<StudentType>[] = [
     cell: ({ row }) => <TextCell size={200}>{row.original.email}</TextCell>,
   },
   {
-    accessorKey: "major",
+    accessorKey: "sub_major_id",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} columnTitle="Major" />
     ),
-    cell: ({ row }) => <TextCell size={200}>{row.original.sub_major_id}</TextCell>, // TODO: Component for major
+    cell: ({ row }) => <SubMajor id={row.original.sub_major_id} />,
   },
   {
     id: "actions",

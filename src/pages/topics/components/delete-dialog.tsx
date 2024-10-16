@@ -1,4 +1,5 @@
 import { ActionDialog } from "@/components/custom/action-dialog";
+import { useToast } from "@/components/ui/use-toast";
 import { useDeleteTopicMutation } from "@/store/api/v1/endpoints/topics";
 import { TopicType } from "@/types/topic";
 import React from "react";
@@ -8,13 +9,28 @@ const DeleteDialog: React.FC<{
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }> = ({ topic, open, onOpenChange }) => {
+  const { toast } = useToast();
   const [deleteTopicMutation, data] = useDeleteTopicMutation();
 
   const handleDelete = async () => {
     await deleteTopicMutation({ id: topic.id });
     if (data.isSuccess) {
+      toast({
+        duration: 1000,
+        title: "Delete topic",
+        description: "Delete topic successfully.",
+      });
       onOpenChange(false);
-      //TODO: Update the table
+    }
+
+    if (data.isError) {
+      toast({
+        duration: 1000,
+        variant: "destructive",
+        title: "Delete topic",
+        description:
+          "Something went wrong, please try again. If the problem persists, please contact the administrator.",
+      });
     }
   };
 

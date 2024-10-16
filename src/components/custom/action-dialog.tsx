@@ -86,7 +86,7 @@ export function ActionDialog(props: ActionDialogProps) {
           <div>{props.children}</div>
 
           {props.confirmText && (
-            <Alert>
+            <Alert className="mt-3">
               <Label className="flex gap-4 items-center">
                 <Checkbox
                   id={confirmId}

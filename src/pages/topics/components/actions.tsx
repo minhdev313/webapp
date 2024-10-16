@@ -24,12 +24,6 @@ const Actions: React.FC<{ row: Row<TopicType> }> = ({ row }) => {
       <ActionCell
         items={[
           {
-            item: "View topic",
-            onClick: () => {
-              console.log("View topic");
-            },
-          },
-          {
             item: "Edit",
             onClick: () => setIsUpdateModalOpen(true),
           },

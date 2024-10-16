@@ -109,7 +109,7 @@ const CreateUpdateDialog: React.FC<CreateUpdateDialogProps> = ({
                   className="text-sm text-danger"
                 />
               </div>
-              <DialogFooter>
+              <DialogFooter className="gap-2">
                 <Button
                   variant="secondary"
                   onClick={() => {

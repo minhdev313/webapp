@@ -1,4 +1,4 @@
-import { LoadingLottie } from "@/components";
+import { LoadingTableLottie } from "@/components";
 import { DataTable } from "@/components/data-table";
 import ErrorBoundaryComponent from "@/components/error/error-boundary";
 import { useGetUsersQuery } from "@/store/api/v1/endpoints/admin";
@@ -28,8 +28,10 @@ export function StudentsTable() {
 
   useEffect(() => {
     if (queryData) {
-      const data = queryData.data.map(({ common_info, extra_info }) => {
-        const { student } = extra_info;
+      const { items, meta } = queryData.data;
+
+      const data = (items || []).map(({ common_info, extra_info }) => {
+        const student = extra_info?.student;
         return {
           ...common_info,
           ...student,
@@ -37,7 +39,7 @@ export function StudentsTable() {
       });
 
       setTableData(data as StudentType[]);
-      // setTotalRecord(queryData.data.meta.total);
+      setTotalRecord(meta.total);
     }
   }, [queryData]);
 
@@ -45,7 +47,7 @@ export function StudentsTable() {
     return (
       <div className=" flex justify-center pt-10">
         <div className=" w-[250px] ">
-          <LoadingLottie />
+          <LoadingTableLottie />
         </div>
       </div>
     );

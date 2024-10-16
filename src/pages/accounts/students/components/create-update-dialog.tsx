@@ -11,7 +11,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/use-toast";
 import { studentSchema } from "@/services/schemas/accounts";
-import { useCreateStudentMutation } from "@/store/api/v1/endpoints/admin";
+import {
+  useCreateStudentMutation,
+  useUpdateStudentMutation,
+} from "@/store/api/v1/endpoints/admin";
 import { StudentType } from "@/types/accounts";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { ErrorMessage, Form, Formik } from "formik";
@@ -22,34 +25,45 @@ interface FormProps {
   student?: StudentType;
 }
 
-const CreateUpdateDialog: React.FC<FormProps> = ({ open, onOpenChange, student }) => {
+const CreateUpdateDialog: React.FC<FormProps> = ({
+  open,
+  onOpenChange,
+  student,
+}) => {
   const [createStudent, createStudentData] = useCreateStudentMutation();
+  const [updateStudent, updateStudentData] = useUpdateStudentMutation();
 
   const initialValues: StudentType = {
-    code: "DE160260",
-    email: "lylcde160260@fpt.edu.vn",
-    name: "Le Cong Ly",
-    phone_number: "0981234221",
+    code: student?.code || "",
+    email: student?.email || "",
+    name: student?.name || "",
+    phone_number: student?.phone_number || "",
     sub_major_id: 1,
   };
 
   const handleCreateForm = async (values: StudentType) => {
-    await createStudent(values);
+    if (student) {
+      await updateStudent({ ...values, id: student.id });
+    } else {
+      await createStudent(values);
+    }
   };
 
   useEffect(() => {
-    if (createStudentData.isSuccess) {
+    if (createStudentData.isSuccess || updateStudentData.isSuccess) {
       toast({
         duration: 1000,
         variant: "default",
-        title: "Create Student",
-        description: "Create Student Successfully.",
+        title: student ? "Update Student" : "Create Student",
+        description: student
+          ? "Update Student Successfully"
+          : "Create Student Successfully.",
       });
       onOpenChange(false);
     }
 
-    if (createStudentData.error) {
-      const { data } = createStudentData.error as {
+    if (createStudentData.error || updateStudentData.error) {
+      const { data } = (createStudentData.error || updateStudentData.error) as {
         data?: { code?: number; error?: string };
       };
       const messageError =
@@ -59,17 +73,17 @@ const CreateUpdateDialog: React.FC<FormProps> = ({ open, onOpenChange, student }
       toast({
         duration: 1000,
         variant: "destructive",
-        title: "Create Student",
+        title: student ? "Update Student" : "Create Student",
         description: messageError,
       });
     }
-  }, [createStudentData]);
+  }, [createStudentData, onOpenChange]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] lg:max-w-[800px]">
         <DialogHeader>
-          <DialogTitle>Create Students</DialogTitle>
+          <DialogTitle>{student ? "Update" : "Create"} Student</DialogTitle>
           <DialogDescription>
             Make changes to your profile here. Click save when you're done.
           </DialogDescription>
@@ -145,12 +159,20 @@ const CreateUpdateDialog: React.FC<FormProps> = ({ open, onOpenChange, student }
                   className="text-sm text-danger"
                 />
               </div>
-              <DialogFooter>
+              <DialogFooter className="gap-2">
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    onOpenChange(false);
+                  }}
+                >
+                  Cancel
+                </Button>
                 <Button type="submit" disabled={isSubmitting}>
                   {isSubmitting && (
                     <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  Create
+                  {student ? "Update" : "Create"}
                 </Button>
               </DialogFooter>
             </Form>

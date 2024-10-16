@@ -1,5 +1,5 @@
 export interface SubMajor {
-  id: string;
+  id: number;
   name: string;
-  major_id: string;
+  major_id: number;
 }
