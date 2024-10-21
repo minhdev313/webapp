@@ -9,6 +9,7 @@ import AccountsRoutes from "./accounts";
 import MajorRoutes from "./majors";
 import GroupsRoutes from "./groups";
 import TopicRoutes from "./topics";
+import ProfileRoutes from "./profile";
 
 const router = createBrowserRouter([
   ...AuthRoutes,
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
   ...SettingRoutes,
   ...MajorRoutes,
   ...TopicRoutes,
+  ...ProfileRoutes,
 ]);
 
 export default router;
