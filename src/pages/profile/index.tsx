@@ -3,13 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { setBreadCrumb } from "@/store/slice/app";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { RootState } from "@/store"; // Đảm bảo import đúng đường dẫn
+import { RootState } from "@/store/index";
+
 
 const Profile = () => {
   const dispatch = useDispatch();
-  
-  const currentUser = useSelector((state: RootState) => state.user.currentUser);
-  
+  const currentUser = useSelector((state: RootState) => state.auth.user as any);
+  const { name, email, phone_number, user_type } = currentUser.common_info || {};
+  const { student_id, code, sub_major_id, capstone_group_id } = currentUser.extra_info?.student || {};
+
   useEffect(() => {
     dispatch(
       setBreadCrumb([
@@ -22,19 +24,18 @@ const Profile = () => {
   return (
     <div className="flex justify-center items-center min-h-screen p-10">
       <div className="flex flex-col md:flex-row gap-10 max-w-[90%] w-full">
-        {/* Avatar & Name Section */}
         <div className="w-full md:w-1/2">
           <Card className="p-12 shadow-lg rounded-lg transition-shadow duration-300 hover:shadow-xl h-full">
-            <CardHeader className="flex flex-col items-center">
+            { <CardHeader className="flex flex-col items-center">
               <Avatar className="w-48 h-48 mb-6">
                 <AvatarImage 
-                  src={currentUser?.avatarUrl || "default_avatar_url_here"} // Thay thế bằng đường dẫn avatar mặc định
-                  alt={currentUser?.name || "User Avatar"} 
+                  src="https://scontent.fdad3-5.fna.fbcdn.net/v/t39.30808-6/455092502_1804243283437831_8600967763519704709_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFG5zG6nQoPiTOhzwsnXcpJPkrVF6qLh_c-StUXqouH9yOlr_wUqnaZHyYhK0FuesUDw7GY0csrCDpVhxZJoN7y&_nc_ohc=vhOtOpWWBJMQ7kNvgHvYX2z&_nc_ht=scontent.fdad3-5.fna&_nc_gid=AKRDrPdnwhk5Mj_e3rAxExc&oh=00_AYAOH5YeYW_YQuyU3dd6nBWbOlbDEcr66IWIjIPyJbsuBw&oe=671EBA78"
+                  alt={name || "User Avatar"} 
                 />
-                <AvatarFallback>{currentUser ? currentUser.name.charAt(0) : "U"}</AvatarFallback>
+                <AvatarFallback>{currentUser ? name.charAt(0) : "User"}</AvatarFallback>
               </Avatar>
-              <h2 className="text-4xl font-bold tracking-tight mt-4">{currentUser?.name}</h2>
-            </CardHeader>
+              <h2 className="text-4xl font-bold tracking-tight mt-4">{name}</h2>
+            </CardHeader> }           
           </Card>
         </div>
 
@@ -63,19 +64,19 @@ const Profile = () => {
               <CardContent>
                 <div className="flex justify-between mb-4">
                   <p className="text-xl font-semibold">Student ID</p>
-                  <p className="text-xl">{currentUser?.code}</p>
+                  <p className="text-xl">{code}</p>
                 </div>
                 <div className="flex justify-between mb-4">
                   <p className="text-xl font-semibold">Email</p>
-                  <p className="text-xl">{currentUser?.email}</p>
+                  <p className="text-xl">{email}</p>
                 </div>
                 <div className="flex justify-between mb-4">
                   <p className="text-xl font-semibold">Phone Number</p>
-                  <p className="text-xl">{currentUser?.phone_number}</p>
+                  <p className="text-xl">{phone_number}</p>
                 </div>
                 <div className="flex justify-between">
                   <p className="text-xl font-semibold">Sub Major</p>
-                  <p className="text-xl">Node JS</p> {/* Adjust according to your logic */}
+                  <p className="text-xl">Node JS</p>
                 </div>
               </CardContent>
             </Card>
